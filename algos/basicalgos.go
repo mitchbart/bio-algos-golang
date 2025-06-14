@@ -1,5 +1,6 @@
 package algos
 
+// Count the number of times the provided sequence occurs in the genome
 func PatternCount(genome string, pattern string) int {
 	if len(pattern) == 0 {
 		return 0
@@ -14,6 +15,7 @@ func PatternCount(genome string, pattern string) int {
 	return count
 }
 
+// Build a frequency table of all k-mers in genome
 func FrequencyTable(genome string, k int) map[string]int {
 	freqMap := make(map[string]int)
 
@@ -29,6 +31,7 @@ func FrequencyTable(genome string, k int) map[string]int {
 	return freqMap
 }
 
+// Get the most frequent value from the frequency table
 func MaxMap(table map[string]int) int {
 	result := 0
 	for _, value := range table {
@@ -39,6 +42,7 @@ func MaxMap(table map[string]int) int {
 	return result
 }
 
+// Returns a list of the most frquent substrings
 func FrequentSubstrings(genome string, k int) []string {
 	var freqPatterns []string
 	freqMap := FrequencyTable(genome, k)
