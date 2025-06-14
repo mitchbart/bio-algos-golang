@@ -86,6 +86,8 @@ func main() {
 			frequentSubstringAnalysis(genome, scanner)
 		case "4":
 			showGenomeInfo(genome)
+		case "5":
+			patternMatchingAnalysis(genome, scanner)
 		case "q", "Q":
 			fmt.Println("Goodbye!")
 			return
@@ -103,6 +105,7 @@ func showMenu() {
 	fmt.Println("2. Pattern Count - Count occurrences of a speific pattern")
 	fmt.Println("3. Frequent Substrigns - Find most frequent k-mers")
 	fmt.Println("4. Genome Info - Show basic genome stats")
+	fmt.Println("5. Pattern Matching - Find location of patterns in a genome")
 	fmt.Println("q. Quit")
 	fmt.Println()
 }
@@ -238,6 +241,33 @@ func showGenomeInfo(genome string) {
 
 }
 
+// Pattern matching analysis
+func patternMatchingAnalysis(genome string, scanner *bufio.Scanner) {
+	fmt.Println("Enter the pattern to search for: ")
+	if !scanner.Scan() {
+		return
+	}
+
+	pattern := strings.TrimSpace(scanner.Text())
+	if pattern == "" {
+		fmt.Println("Pattern cannot be empty. \n")
+		return
+	}
+
+	result := algos.PatternMatching(pattern, genome)
+	fmt.Printf("Pattern '%s' appears at the following positions in the genome\n\n", pattern)
+
+	if len(result) == 0 {
+		fmt.Println("No matches found.\n")
+	} else {
+		positions := make([]string, len(result))
+		for i, pos := range result {
+			positions[i] = strconv.Itoa(pos)
+		}
+		fmt.Println(strings.Join(positions, " "))
+		fmt.Printf("\nTotal matches: %d\n\n", len(result))
+	}
+}
 // Get k value from user
 func getKValue(scanner *bufio.Scanner) int {
 	fmt.Print("Enter k-mer size (k): ")

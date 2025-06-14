@@ -1,5 +1,7 @@
 package algos
 
+import "strings"
+
 // Count the number of times the provided sequence occurs in the genome
 func PatternCount(genome string, pattern string) int {
 	if len(pattern) == 0 {
@@ -53,5 +55,43 @@ func FrequentSubstrings(genome string, k int) []string {
 		}
 	}
 	return freqPatterns
+}
+
+// Reverse complement function
+func ReverseComplement(pattern string) string {
+	var builder strings.Builder
+	builder.Grow(len(pattern))
+
+	for i := len(pattern) - 1; i >= 0; i-- {
+		switch pattern[i] {
+		case 'A':
+			builder.WriteByte('T')
+		case 'T':
+			builder.WriteByte('A')
+		case 'C':
+			builder.WriteByte('G')
+		case 'G':
+			builder.WriteByte('C')
+		default:
+			builder.WriteByte('N')
+		}
+	}
+	return builder.String()
+}
+
+// Pattern matching - return the positions in a sequence where a pattern is found
+func PatternMatching(pattern string, genome string) []int {
+	// Pattern validation
+	if len(pattern) == 0 || len(pattern) > len(genome) {
+		return []int{}
+	}
+
+	var result []int
+	for i := 0; i <= len(genome) - len(pattern); i++ {
+		if genome[i:i+len(pattern)] == pattern {
+			result = append(result, i)
+		}
+	}
+	return result
 }
 
